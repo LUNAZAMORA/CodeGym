@@ -1,42 +1,43 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <utility>
 #include <string>
 
-std::vector<int> current_house_coordinates;
-std::vector<int> current_house_coordinates_robot;
-std::vector<std::vector<int>> houses_visited;
+std::pair<int, int> current_house_coordinates;
+std::pair<int, int> current_house_coordinates_robot;
+std::vector<std::pair<int, int>> houses_visited;
 
-void perform_move(char move, std::vector<int> &current_house_coordinates)
+void perform_move(char move, std::pair<int, int> &current_house_coordinates)
 {
     int x, y;
     if (move == '^') {// y + 1
         //x = current_house_coordinates[0];
         //y = current_house_coordinates[1] + 1;
         //current_house_coordinates = {x, y};
-        current_house_coordinates[1] += 1;
+        current_house_coordinates.second += 1;
     } else if (move == 'v') {// y - 1
         //x = current_house_coordinates[0];
         //y = current_house_coordinates[1] - 1;
         //current_house_coordinates = {x, y};
-        current_house_coordinates[1] -= 1;
+        current_house_coordinates.second -= 1;
     } else if (move == '>') {// x + 1
         //x = current_house_coordinates[0] + 1;
         //y = current_house_coordinates[1];
         //current_house_coordinates = {x, y};
-        current_house_coordinates[0] += 1;
+        current_house_coordinates.first += 1;
     } else if (move == '<') {// x - 1
        //x = current_house_coordinates[0] - 1;
        //y = current_house_coordinates[1];
        //current_house_coordinates = {x, y};
-       current_house_coordinates[0] -= 1;
+       current_house_coordinates.first -= 1;
     } else{
         std::cout << "ERROR\n";
     }
 
 }
 
-int add_no_repetitions(std::vector<std::vector<int>> &houses_visited, std::vector<int> &current_house_coordinates)
+int add_no_repetitions(std::vector<std::pair<int, int>> &houses_visited, std::pair<int, int> &current_house_coordinates)
 {
     for (auto elem : houses_visited) {
         if (current_house_coordinates == elem) {
@@ -48,7 +49,6 @@ int add_no_repetitions(std::vector<std::vector<int>> &houses_visited, std::vecto
 }
 int main()
 {
-    current_house_coordinates.reserve(2);
     current_house_coordinates = {0, 0};
     std::ifstream file_input;
     file_input.open("input.txt");
@@ -67,7 +67,6 @@ int main()
     houses_visited.clear();
     int turn = 0;
     current_house_coordinates = {0, 0};
-    current_house_coordinates_robot.reserve(2);
     current_house_coordinates_robot = {0, 0};
     for (char move: directions) {
         if (turn == 0) {
