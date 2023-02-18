@@ -42,5 +42,6 @@ int main(){
     std::cout << get_floor(text) << "\n";
     // Part 2 result
     std::cout << get_getCharacterPosition(text) << "\n";
+    file_input.close();
     return 0;
 }
